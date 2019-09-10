@@ -4,7 +4,7 @@ module.exports = {
   entry: [
     './src/myVue.js',
     './src/compile.js',
-    './src/index.js',
+    './src/index.js'
     ],
   output: {
     path: __dirname,

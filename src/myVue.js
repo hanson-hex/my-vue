@@ -1,7 +1,13 @@
-class MyVue {
+import { Watcher, Dep } from './observer'
+
+export class MyVue {
   constructor (options) {
     this.$data = options.data
     this.observe(this.$data)
+
+    new Watcher()
+
+    console.log('模拟render 触发test的getter', this.$data.text)
   }
   observe (value) {
     if (!value || typeof value !== 'object') {
@@ -12,10 +18,12 @@ class MyVue {
     })
   }
   defineReactive(obj, key, value) {
+    const dep = new Dep()
     Object.defineProperty(obj, key, {
       enumerable: true,
       configurable: true,
       get: function () {
+        dep.addDep(Dep.target)
         return value
       },
       set: function (newVal) {
@@ -24,7 +32,10 @@ class MyVue {
         }
         value = newVal
         console.log('数据变化了')
+        dep.notify()
       }
     })
   }
 }
+
+

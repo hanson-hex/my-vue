@@ -1,3 +1,4 @@
+import { MyVue } from './myVue'
 const o = new MyVue({
   data: {
     text: '123',
@@ -7,4 +8,5 @@ const o = new MyVue({
   }
 })
 console.log(o.$data.text)
-console.log('')
+o.$data.text = '353'
+console.log(o.$data.text)
