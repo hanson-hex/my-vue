@@ -1,9 +1,10 @@
-// alert(200)
-class Person {
-  constructor (name) {
-    this.name = name
+const o = new MyVue({
+  data: {
+    text: '123',
+    foo: {
+      bar: '3345'
+    }
   }
-}
-console.log('11111111')
-let p = new Person('hi')
-console.log(p.name)
+})
+console.log(o.$data.text)
+console.log('')
