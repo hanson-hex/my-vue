@@ -1,5 +1,5 @@
 import { Watcher, Dep } from './observer'
-
+import { Comile } from './compile'
 export class MyVue {
   constructor (options) {
     this.$data = options.data

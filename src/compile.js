@@ -1,4 +1,4 @@
-class Comile {
+export class Comile {
   constructor (el, vm) {
     this.$vm = vm
     this.$el = document.querySelector(el)
