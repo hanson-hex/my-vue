@@ -5,16 +5,35 @@ export class MyVue {
     this.$data = options.data
     this.observe(this.$data)
 
-    new Watcher()
+    // 新建一个watcher 观察者对象, 这个时候Dep.targt指向这个watcher
+    // new Watcher()
 
+    // 模拟render的过程啊， 微课触发text属性的get函数
     console.log('模拟render 触发test的getter', this.$data.text)
+    if (options.created) {
+      options.created.call(this)
+    }
+    this.$compile = new Comile(options.el, this)
   }
   observe (value) {
     if (!value || typeof value !== 'object') {
       return
     }
     Object.keys(value).forEach(key => {
+      this.proxyData(key)
       this.defineReactive(value, key, value[key])
+    })
+  }
+  proxyData (key) {
+    Object.defineProperty(this, key, {
+      configurable: true,
+      enumerable: true,
+      get () {
+        return this.$data[key]
+      },
+      set (newVal) {
+        this.$data[key] = newVal
+      }
     })
   }
   defineReactive(obj, key, value) {
@@ -23,6 +42,7 @@ export class MyVue {
       enumerable: true,
       configurable: true,
       get: function () {
+        // 将当时的watcher对象存入Dep的deps中
         dep.addDep(Dep.target)
         return value
       },
@@ -32,6 +52,7 @@ export class MyVue {
         }
         value = newVal
         console.log('数据变化了')
+        // set的时候触发nofify通知所有的wather对象更新视图
         dep.notify()
       }
     })
