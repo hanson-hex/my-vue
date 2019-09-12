@@ -25,11 +25,14 @@ export class Comile {
       // 表达式
       // 识别{{}}数据
       let reg = /\{\{(.*)\}\}/
+      // 元素节点
       if (this.isElementNode(node)) {
         this.compile(node)
+        // 文本节点
       } else if (this.isTextNode(node) && reg.test(text)) {
         this.comileText(node, RegExp.$1)
       }
+      // 递归子节点
       if (node.childNodes && node.childNodes.length) {
         this.complieElement(node)
       }
@@ -56,7 +59,7 @@ export class Comile {
   isDirective (attr) {
     return attr.indexOf('h-') === 0
   }
-  isEventDirectve (dir) {
+  isEventDirective (dir) {
     return dir.indexOf('@') === 0
   }
   isElementNode (node) {
@@ -66,14 +69,14 @@ export class Comile {
     return node.nodeType == 3
   }
   text (node, vm, exp) {
-    this.udpate(node, vm, exp, 'text')
+    this.update(node, vm, exp, 'text')
   }
   html (node, vm, exp) {
     this.update(node, vm, exp, 'html')
   }
   model (node, vm, exp) {
     this.update(node, vm, exp, 'model')
-    let val = vm.exp
+    let val = vm[exp]
     node.addEventListener('input', e => {
       let newValue = e.target.value
       vm[exp] = newValue
@@ -88,7 +91,7 @@ export class Comile {
     })
   }
 
-  eventHander (node, vm, exp, dir) {
+  eventHandler (node, vm, exp, dir) {
     let fn = vm.$options.methods && vm.$options.methods[exp]
     if (dir && fn) {
       node.addEventListenter(dir, fn.bind(vm), false)

@@ -22,12 +22,12 @@ export class Watcher {
     // 将Dep.target 指向自己
     // 然后触发属性的getter添加监听
     // 最后将Dep.target 置空
-    // Dep.target = this
     this.vm = vm
     this.key = key
     this.value = this.get()
   }
   get () {
+    // Dep.target = this
    Dep.target = this
     let value = this.vm[this.key]
     return value

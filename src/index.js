@@ -1,5 +1,6 @@
 import { MyVue } from './myVue'
 const o = new MyVue({
+  el: 'app',
   data: {
     text: '123',
     foo: {
