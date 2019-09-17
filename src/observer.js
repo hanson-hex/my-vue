@@ -25,12 +25,13 @@ export class Watcher {
     // 最后将Dep.target 置空
     this.vm = vm
     this.key = key
+    Dep.target = this
     this.value = this.get()
     this.cb = cb
+    Dep.target = null
   }
   get () {
     // Dep.target = this
-   Dep.target = this
     let value = this.vm[this.key]
     return value
   }

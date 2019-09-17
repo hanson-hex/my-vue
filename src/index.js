@@ -13,7 +13,7 @@ const o = new MyVue({
   },
   methods: {
     changeName () {
-      this.name = 'new name'
+      alert('展示了视图')
     }
   }
 })

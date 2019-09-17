@@ -26,9 +26,6 @@ export class Comile {
     console.log('childNodes:', childNodes)
     Array.from(childNodes).forEach(node => {
       let text = node.textContent
-      console.log('节点node:', node)
-      console.log('text:', text)
-      console.log('nodeType:', node.nodeType)
       // 表达式
       // 识别{{}}数据
       let reg = /\{\{(.*)\}\}/

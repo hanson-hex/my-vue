@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   entry: [
     './src/myVue.js',
-    // './src/compile.js',
+    './src/compile.js',
     './src/index.js'
     ],
   output: {
