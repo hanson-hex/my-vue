@@ -16,8 +16,16 @@
 <body>
 <p>myVue</p>
 <body>
-<div class="box">
-    <img src="https://cloud.az22c.top/logo.jpg?imageMogr2/thumbnail/x100" alt="图片src要设置!!"/>
+<div id="app">
+    <p>{{name}}</p>
+    <p h-text="name"></p>
+    <p>{{age}}</p>
+    <p>
+        {{doubleAge}}
+    </p>
+    <input type="text" h-model="name">
+    <button @click="changeName">hi</button>
+    <div h-html="rawHtml"></div>
 </div>
 </body>
 <script>
