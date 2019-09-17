@@ -11,6 +11,7 @@ export class Dep {
   // 通知所有监听器去更新视图
   notify () {
     this.deps.forEach(dep => {
+      console.log('dep:', dep)
       dep.update()
     })
   }
@@ -25,6 +26,7 @@ export class Watcher {
     this.vm = vm
     this.key = key
     this.value = this.get()
+    this.cb = cb
   }
   get () {
     // Dep.target = this

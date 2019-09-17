@@ -1,9 +1,12 @@
+import { Watcher, Dep } from './observer'
 export class Comile {
   constructor (el, vm) {
     this.$vm = vm
     this.$el = document.querySelector(el)
     if (this.$el) {
+      console.log('this.$el:', this.$el)
       this.$fragment = this.node2Fragment(this.$el)
+      console.log('this.$ragment:', this.$fragment)
       this.complieElement(this.$fragment)
       this.$el.appendChild(this.$fragment)
     }
@@ -20,8 +23,12 @@ export class Comile {
   }
   complieElement (el) {
     let childNodes = el.childNodes
+    console.log('childNodes:', childNodes)
     Array.from(childNodes).forEach(node => {
       let text = node.textContent
+      console.log('节点node:', node)
+      console.log('text:', text)
+      console.log('nodeType:', node.nodeType)
       // 表达式
       // 识别{{}}数据
       let reg = /\{\{(.*)\}\}/
@@ -40,6 +47,7 @@ export class Comile {
   }
   compile (node) {
     let nodeAttrs = node.attributes
+    console.log('解析元素节点:', node)
     Array.from(nodeAttrs).forEach(attr => {
       let attrName = attr.name
       let exp = attr.value
@@ -54,6 +62,7 @@ export class Comile {
     })
   }
   comileText (node, exp) {
+    console.log('解析文本节点:', node, exp)
     this.text(node, this.$vm, exp)
   }
   isDirective (attr) {
@@ -78,6 +87,7 @@ export class Comile {
     this.update(node, vm, exp, 'model')
     let val = vm[exp]
     node.addEventListener('input', e => {
+      console.log('val:', val)
       let newValue = e.target.value
       vm[exp] = newValue
       val = newValue
@@ -86,7 +96,7 @@ export class Comile {
   update (node, vm, exp, dir) {
     let updateFn = this[dir + 'Updater']
     updateFn && updateFn(node, vm[exp])
-    new watcher(vm, exp, function (value) {
+    new Watcher(vm, exp, function (value) {
       updateFn && updateFn(node, value)
     })
   }
@@ -94,7 +104,7 @@ export class Comile {
   eventHandler (node, vm, exp, dir) {
     let fn = vm.$options.methods && vm.$options.methods[exp]
     if (dir && fn) {
-      node.addEventListenter(dir, fn.bind(vm), false)
+      node.addEventListener(dir, fn.bind(vm), false)
     }
   }
   textUpdater (node, value) {
